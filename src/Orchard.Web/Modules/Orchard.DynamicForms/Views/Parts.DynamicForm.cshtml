@@ -245,11 +245,10 @@
         });
 
         function sucs(DynamicFormResponseDetails) {
-            console.log(DynamicFormResponseDetails);
             var x = DynamicFormResponseDetails.replace(/]\[/g, ",");
             var y = x.replace(/:",/g, ":\"");
-            var formatedJSONdata = y.replace(/,}/g, "}");
-            console.log(formatedJSONdata);
+            var z=y.replace( /\r?\n|\r/g," ");
+            var formatedJSONdata = z.replace(/,}/g, "}");
             JSONToCSVConvertor(formatedJSONdata, 'Form Details', true);
         }
         function err() {

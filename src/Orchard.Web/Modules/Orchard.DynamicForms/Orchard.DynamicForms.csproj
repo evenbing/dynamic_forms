@@ -81,6 +81,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".gitignore" />
     <Content Include="bin\Autofac.Configuration.dll" />
     <Content Include="bin\Autofac.Configuration.pdb" />
     <Content Include="bin\Autofac.Configuration.xml" />
