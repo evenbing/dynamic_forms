@@ -1,0 +1,380 @@
+﻿@*@model Orchard.DynamicForms.ViewModels.DynamicFormDefinitionViewModel
+*@
+@using Orchard.DynamicForms.ViewModels;
+@using Orchard.Forms.Services
+@using System.Web.Mvc.Html
+@using Orchard.ContentManagement
+@using Orchard.Utility.Extensions;
+
+@{
+    HtmlHelper.ClientValidationEnabled = true;
+    HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
+    DynamicFormDefinitionViewModel formDefinition = Model.FormDefinition;
+    Script.Require("jQuery").AtHead();
+
+    //Script.Require("jsKnockout").AtHead();
+@*<script src='http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js'></script>*@
+
+    Script.Include("knockout-2.2.1.js").AtHead();
+    Script.Include("knockout.validation.js").AtHead();
+}
+
+@*<div>@formDefinition.Id</div>
+<div>Name: @formDefinition.Name</div>
+<div>@formDefinition.JsonData</div>
+*@
+
+
+@{var formJson = Html.Encode(formDefinition.JsonData);
+  var formDefJson = formJson.Replace("&quot;", "\"");
+}
+
+
+
+@using (Html.BeginFormAntiForgeryPost(Url.Action("FormResponse", "Form", new { Area = "Orchard.DynamicForms", ReturnUrl = Context.Request.ToUrlString() }), FormMethod.Post, new { @class = "comment-form" }))
+{
+    <div id="export">
+        @{
+          int formId = Convert.ToInt32(@formDefinition.Id);
+   
+        }
+    
+         <input type="button" style="position: absolute; left: 950px; top: 150px;" class="exportButton" id="@formId" value="Export" title="Export Form  Data" onclick="myFunction(this.id)">
+    </div>
+
+<div id="templateContainer">
+    @{
+    int formID = Convert.ToInt32(@formDefinition.Id);
+    //string formName = @formDefinition.Name;
+        }
+        @Html.Hidden("formID", formID)
+        @*@Html.Hidden("formName", formName)*@
+        <div id="hideDiv" data-bind="template: { name: templateToUse, data: dynamicFields }"></div>
+
+</div>
+<br />
+<br />
+<input type="submit" id="submitButton" value="Submit" />
+}
+
+
+@using (Script.Foot())
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var viewModel = function () {
+                var self = this;
+                var formDefinitionData = '@formDefJson';
+
+                var regex = new RegExp('&quot;', 'g'); formDefiniton = formDefinitionData.replace(regex, '\"');
+
+                var formDefinitionObj = eval("(" + formDefiniton + ")");
+                self.dynamicFields = ko.observableArray([]);
+
+                self.dynamicFields = formDefinitionObj;
+                console.log(self.dynamicFields);
+
+                self.templateToUse = function (dynamicFields) {
+
+                    $.each(dynamicFields.DynamicFields, function (idx, formField) {
+                        var REQ = "";
+                        if (formField.State.IsRequired == "on" || formField.State.IsRequired == "Yes") {
+                            REQ = "required";
+                        }
+                        var REGEX = "";
+                        var content = "";
+                        switch (formField.Name) {
+
+                            case "TextField":
+                                if (formField.State.Regex == "") {
+                                    REGEX = "([a-zA-Z0-9]| |/|\|@@|#|$|%|&)+";
+                                }
+                                else {
+                                    REGEX = formField.State.Regex.replace(/amp;/g, "");
+                                }
+
+                                content = '<b>' + formField.State.Title + ': </b>' + '<br/><input type="text" name="' + formField.State.Title.replace(/\s/g, '') + '" value=""    data-bind="text:name" id="' + formField.State.Title.replace(/\s/g, '') + '" pattern="' + REGEX + '" ' + REQ + '></input><br/>';
+                                break;
+
+                            case "EmailField":
+                                if (formField.State.Regex == "") {
+                                    REGEX = "[^@@]+@@[^@@]+\.[a-zA-Z]{2,6}";
+                                }
+                                else {
+                                    REGEX = regex;
+                                }
+                                content = '<b>' + formField.State.Title + ': </b>' + '<br/><input type="email" name="' + formField.State.Title.replace(/\s/g, '') + '" value=""    data-bind="text:name" id="' + formField.State.Title.replace(/\s/g, '') + '" pattern="' + REGEX + '" ' + REQ + '></input><br/>';
+
+                                break;
+                            case "NumericField":
+                                if (formField.State.Regex == "") {
+                                    REGEX = "([0-9])+";
+                                }
+                                else {
+                                    REGEX = regex;
+                                }
+                                content = '<b>' + formField.State.Title + ': </b>' + '<br/><input type="text" name="' + formField.State.Title.replace(/\s/g, '') + '"   data-bind="text:name" id="' + formField.State.Title.replace(/\s/g, '') + '" pattern="' + REGEX + '" ' + REQ + '></input><br/>';
+                                break;
+                            case "RadioButtonField":
+
+                                var RBValues = formField.State.RadioButtonFieldValues;
+                                var rrs = RBValues.split(',');
+                                var choosing = '<input type="radio" name="' + formField.State.Title.replace(/\s/g, '') + '" value="" style="display:none" ' + REQ + '></input>';
+                                for (var r = 0; r < rrs.length; r++) {
+                                    var rEach = rrs[r];
+                                    choosing = '<input type="radio" name="' + formField.State.Title.replace(/\s/g, '') + '" value="' + rEach + '">' + rEach + '</input><br>' + choosing;
+                                }
+                                content = '<div  id="' + formField.State.Title.replace(/\s/g, '') + '" ><b>' + formField.State.Title + ': </b>' + '<br/>' + choosing + '</div>';
+
+                                break;
+                            case "CheckBoxField":
+                                var CBValues = formField.State.CheckBoxFieldValues;
+                                var ccs = CBValues.split(',');
+                                var checking = "";
+                                for (var c = 0; c < ccs.length; c++) {
+                                    var cEach = ccs[c];
+                                    checking = '<input type="checkbox" name="' + formField.State.Title.replace(/\s/g, '') + '" value="' + cEach + '">' + cEach + '</input><br>' + checking;
+                                }
+                                content = '<div name="' + formField.State.Title.replace(/\s/g, '') + '" id="' + formField.State.Title.replace(/\s/g, '') + '" ><b>' + formField.State.Title + ': </b>' + '<br/>' + checking + '</div>';
+
+                                break;
+                            case "DropDownField":
+
+                                var DDValues = formField.State.DropDownFieldValues;
+                                var dds = DDValues.split(',');
+                                for (var d = 0; d < dds.length; d++) {
+                                    var dEach = dds[d];
+                                    var opting = opting + '<option>' + dEach + '</option>';
+                                }
+                                content = '<b>' + formField.State.Title + ': </b>' + '<br/>&nbsp; <select name="' + formField.State.Title.replace(/\s/g, '') + '"  id="' + formField.State.Title.replace(/\s/g, '') + '"  ' + REQ + '>' + '<option></option>' + opting + '</select><br/>';
+
+
+                                break;
+                            case "DateTimeField":
+                                content = '<b>' + formField.State.Title + ': </b>' + '<br/>&nbsp; <input name="' + formField.State.Title.replace(/\s/g, '') + '" type="date" placeholder="dd/mm/yyyy"  data-bind="text:name" id="' + formField.State.Title.replace(/\s/g, '') + '"  ' + REQ + '></input><br/>';
+                                break;
+
+                            case "MultiLineTextField":
+                                if (formField.State.Regex == "") {
+                                    REGEX = "([a-zA-Z0-9]| |/|\|@@|#|$|%|&)+";
+                                }
+                                else {
+                                    REGEX = formField.State.Regex.replace(/amp;/g, "");
+                                }
+                                var dimension = formField.State.Dimension;
+                                var strDim = "";
+                                if (dimension) {
+                                    var xy = dimension.split(',');
+                                    strDim = "rows='" + xy[0] + " 'cols='" + xy[1] + "'";
+                                }
+
+
+                                content = '<b>' + formField.State.Title + ': </b>' + '<br/><textarea ' + strDim + ' name="' + formField.State.Title.replace(/\s/g, '') + '" value=""    data-bind="text:name" id="' + formField.State.Title.replace(/\s/g, '') + '" pattern="' + REGEX + '" ' + REQ + '/><br/>';
+                                break;
+
+
+                        }
+                        content = '<div class="fieldContainerDiv">' + content + '</div>';
+                        $('#templateContainer').append(content);
+
+                    });
+                };
+            };
+
+            ko.applyBindings(new viewModel());
+
+        });
+
+        //});
+
+    </script>
+}
+<script>
+      // Hide the submit button when no fields on the form
+    $(document).ready(function () {
+        var regex = new RegExp('&quot;', 'g');
+        var formDefinitionData = '@formDefJson';
+        var formDefinitionObj = eval("(" + formDefinitionData.replace(regex, '\"') + ")");
+        if (formDefinitionObj.DynamicFields.length == 0) {
+            $("#submitButton").hide();
+        }
+    });
+</script>
+<script>
+//Disable Export Button when no data to export.
+    $(document).ready(function () {
+        var editFormUrl = '@HttpUtility.JavaScriptStringEncode(Url.Action("IsFormEditable", "Admin", new { area = "Orchard.DynamicForms" }))';
+        var ID = parseInt(@formDefinition.Id);
+        $.ajax({
+            type: "GET",
+            url: editFormUrl,
+            data: { FormId: ID },
+
+            async: false,
+            success: function (flag) {
+                if (!flag) {
+                    $('.exportButton').attr("disabled", "disabled");
+                    $('.exportButton').attr("title", "No data available for export");
+                }
+            }
+            
+
+        });
+    });
+
+</script>
+<script>
+//Export To CSV/Excel
+    var DownloadCsvUrl = '@HttpUtility.JavaScriptStringEncode(Url.Action("ExportData", "Export", new { area = "Orchard.DynamicForms" }))';
+    var requestAntiForgeryToken = '@HttpUtility.JavaScriptStringEncode(Html.AntiForgeryTokenValueOrchard().ToString())';
+    var ID = "";
+    function myFunction(el) {
+        ID = el;
+    }
+    $('.exportButton').click(function (e) {
+        
+        $.ajax({
+            type: "GET",
+            url: DownloadCsvUrl,
+            data: { FormId: ID },
+
+            async: false,
+            success: sucs,
+            error: err
+
+        });
+
+        function sucs(DynamicFormResponseDetails) {
+            console.log(DynamicFormResponseDetails);
+            var x = DynamicFormResponseDetails.replace(/]\[/g, ",");
+            var y = x.replace(/:",/g, ":\"");
+            var formatedJSONdata = y.replace(/,}/g, "}");
+            console.log(formatedJSONdata);
+            JSONToCSVConvertor(formatedJSONdata, 'Form Details', true);
+        }
+        function err() {
+            alert("Data not found");
+        }
+    });
+
+    function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
+        //If JSONData is not an object then JSON.parse will parse the JSON string in an Object
+
+        var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
+
+        var CSV = '';
+
+        //Set Report title in first row or line
+        CSV += ReportTitle + '\r\n\n';
+
+       //set html table for chrome
+        var isChrome = !!window.chrome;
+        if (isChrome) {
+            if (ShowLabel) {
+                var headrow = "<table id='tblExport' border:'1'> <tr border='1'> ";
+                var row="";
+                //This loop will extract the label from 1st index of on array
+                for (var index in arrData[0]) {
+
+                    //Now convert each value to string and comma-seprated
+                    var tempRow ="<th width=1'100'>" + index + "</th>";
+                    row= tempRow + row;
+                    //row += "<th width=1'100'>" + index + "</th>";//',';
+                }
+                row += "</tr>";
+                row=headrow+row;
+                // row = row.slice(0, -1);
+
+                //append Label row with line break
+                CSV += row //+ '\r\n';
+            }
+
+            //1st loop is to extract each row
+            for (var i = 0; i <arrData.length; i++) {
+                var headRow = "<tr border='1'>";
+                var row="";
+                //2nd loop will extract each column and convert it in string comma-seprated
+                for (var index in arrData[i]) {
+                    // row += '"' + arrData[i][index] + '",';
+                    var temprow ="<td width=1'100' allign ='centre'>" + arrData[i][index] + "</td>";
+                    row = temprow +row;
+                }
+                row += "</tr>";
+                row=headRow+row;
+                //row.slice(0, row.length - 1);
+
+                //add a line break after each row
+                CSV += row //+ '\r\n';
+            }
+            CSV += "</table>";
+        }
+        else {
+            //This condition will generate the Label/Header
+            if (ShowLabel) {
+                var row = "";
+
+                //This loop will extract the label from 1st index of on array
+                for (var index in arrData[0]) {
+
+                    //Now convert each value to string and comma-seprated
+                    var tempRow =index + ',';
+                    row = tempRow + row ;
+                }
+
+                row = row.slice(0, -1);
+
+                //append Label row with line break
+                CSV += row + '\r\n';
+            }
+
+            //1st loop is to extract each row
+            for (var i = 0; i < arrData.length; i++) {
+                var row = "";
+
+                //2nd loop will extract each column and convert it in string comma-seprated
+                for (var index in arrData[i]) {
+                    var tempRow = '"' + arrData[i][index] + '",';
+                    row = tempRow + row;
+                }
+
+                row.slice(0, row.length - 1);
+
+                //add a line break after each row
+                CSV += row + '\r\n';
+            }
+        }
+        if (CSV == '') {
+            alert("Invalid data");
+            return;
+        }
+
+        //Generate a file name
+        var fileName = "";
+        //this will remove the blank-spaces from the title and replace it with an underscore
+        fileName += ReportTitle.replace(/ /g, "_");
+
+        var uri = 'data:application/xls;charset=utf-8,' + escape(CSV);
+
+        // Now the little tricky part.
+        // you can use either>> window.open(uri);
+        // but this will not work in some browsers
+        // or you will not get the correct file extension    
+
+        //this trick will generate a temp <a /> tag
+        var link = document.createElement("a");
+        link.href = uri;
+
+        //set the visibility hidden so it will not effect on your web-layout
+        link.style = "visibility:hidden";
+        link.download = fileName + ".csv";
+
+        //this part will append the anchor tag and remove it after automatic click
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+</script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+
+
+

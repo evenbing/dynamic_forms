@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5FA1CF28-610D-4600-8DC6-8172D4ADF1A9}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Challenge.DynamicForms</RootNamespace>
+    <AssemblyName>Challenge.DynamicForms</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Orchard.Forms">
+      <HintPath>..\Orchard.Forms\bin\Orchard.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="Orchard.jQuery">
+      <HintPath>..\Orchard.jQuery\bin\Orchard.jQuery.dll</HintPath>
+    </Reference>
+    <Reference Include="Orchard.Roles">
+      <HintPath>..\Orchard.Roles\bin\Orchard.Roles.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\lib\aspnetmvc\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Autofac.Configuration.dll" />
+    <Content Include="bin\Autofac.Configuration.pdb" />
+    <Content Include="bin\Autofac.Configuration.xml" />
+    <Content Include="bin\Autofac.dll" />
+    <Content Include="bin\Autofac.pdb" />
+    <Content Include="bin\Autofac.xml" />
+    <Content Include="bin\Castle.Core.dll" />
+    <Content Include="bin\Castle.Core.xml" />
+    <Content Include="bin\Challenge.DynamicForms.dll" />
+    <Content Include="bin\Challenge.DynamicForms.pdb" />
+    <Content Include="bin\FluentNHibernate.dll" />
+    <Content Include="bin\FluentNHibernate.xml" />
+    <Content Include="bin\Iesi.Collections.dll" />
+    <Content Include="bin\Iesi.Collections.pdb" />
+    <Content Include="bin\Iesi.Collections.xml" />
+    <Content Include="bin\log4net.dll" />
+    <Content Include="bin\log4net.xml" />
+    <Content Include="bin\Newtonsoft.Json.dll" />
+    <Content Include="bin\Newtonsoft.Json.xml" />
+    <Content Include="bin\NHibernate.dll" />
+    <Content Include="bin\NHibernate.Linq.dll" />
+    <Content Include="bin\NHibernate.pdb" />
+    <Content Include="bin\NHibernate.SqlAzure.dll" />
+    <Content Include="bin\NHibernate.SqlAzure.pdb" />
+    <Content Include="bin\NHibernate.xml" />
+    <Content Include="bin\Orchard.Core.dll" />
+    <Content Include="bin\Orchard.Core.pdb" />
+    <Content Include="bin\Orchard.Forms.dll" />
+    <Content Include="bin\Orchard.Forms.pdb" />
+    <Content Include="bin\Orchard.Framework.dll" />
+    <Content Include="bin\Orchard.Framework.pdb" />
+    <Content Include="bin\Orchard.jQuery.dll" />
+    <Content Include="bin\Orchard.jQuery.pdb" />
+    <Content Include="bin\Orchard.Roles.dll" />
+    <Content Include="bin\Orchard.Roles.pdb" />
+    <Content Include="bin\Orchard.Tokens.dll" />
+    <Content Include="bin\Orchard.Tokens.pdb" />
+    <Content Include="bin\Orchard.Workflows.dll" />
+    <Content Include="bin\Orchard.Workflows.pdb" />
+    <Content Include="bin\System.Net.Http.Formatting.dll" />
+    <Content Include="bin\System.Net.Http.Formatting.xml" />
+    <Content Include="bin\System.Web.Http.dll" />
+    <Content Include="bin\System.Web.Http.WebHost.dll" />
+    <Content Include="bin\System.Web.Http.WebHost.xml" />
+    <Content Include="bin\System.Web.Http.xml" />
+    <Content Include="bin\System.Web.Mvc.dll" />
+    <Content Include="bin\System.Web.Mvc.xml" />
+    <Content Include="bin\System.Web.Razor.dll" />
+    <Content Include="bin\System.Web.Razor.xml" />
+    <Content Include="bin\System.Web.WebPages.Deployment.dll" />
+    <Content Include="bin\System.Web.WebPages.Deployment.xml" />
+    <Content Include="bin\System.Web.WebPages.dll" />
+    <Content Include="bin\System.Web.WebPages.Razor.dll" />
+    <Content Include="bin\System.Web.WebPages.Razor.xml" />
+    <Content Include="bin\System.Web.WebPages.xml" />
+    <Content Include="Scripts\jquery.jsPlumb-1.4.1-all-min.js" />
+    <Content Include="Scripts\jquery.mobile-1.4.0.js" />
+    <Content Include="Scripts\knockout-2.2.1.js" />
+    <Content Include="Scripts\knockout.mapping-latest.js" />
+    <Content Include="Scripts\knockout.validation.js" />
+    <Content Include="Scripts\Orchard-DynamicForms-Serialize.js" />
+    <Content Include="Scripts\Orchard-DynamicForms.js" />
+    <Content Include="Styles\dragDropStyle.css" />
+    <Content Include="Styles\Orchard-DynamicForms-Admin.css" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Scripts\Web.config" />
+    <Content Include="Styles\Web.config" />
+    <Content Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Module.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Orchard\Orchard.Framework.csproj">
+      <Project>{2D1D92BB-4555-4CBE-8D0E-63563D6CE4C6}</Project>
+      <Name>Orchard.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Orchard.Core.csproj">
+      <Project>{9916839C-39FC-4CEB-A5AF-89CA7E87119F}</Project>
+      <Name>Orchard.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Placement.info">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ExportController.cs" />
+    <Compile Include="Controllers\FormController.cs" />
+    <Compile Include="Drivers\DynamicFormDriver.cs" />
+    <Compile Include="DynamicFields\DynamicCheckBoxField.cs" />
+    <Compile Include="DynamicFields\DynamicDateTimeField.cs" />
+    <Compile Include="DynamicFields\DynamicDropDownField.cs" />
+    <Compile Include="DynamicFields\DynamicEmailField.cs" />
+    <Compile Include="DynamicFields\DynamicNumericField.cs" />
+    <Compile Include="DynamicFields\DynamicRadioButtonField.cs" />
+    <Compile Include="DynamicFields\DynamicTextField.cs" />
+    <Compile Include="DynamicFields\MultilineTextField.cs" />
+    <Compile Include="Forms\CheckBoxFieldForm.cs" />
+    <Compile Include="Forms\DateTimeFieldForm.cs" />
+    <Compile Include="Forms\DropDownFieldForm.cs" />
+    <Compile Include="Forms\EmailFieldForm.cs" />
+    <Compile Include="Forms\MultiLineTextFieldForm.cs" />
+    <Compile Include="Forms\NumericFieldForm.cs" />
+    <Compile Include="Forms\RadioButtonFieldForm.cs" />
+    <Compile Include="Forms\TextFieldForm.cs" />
+    <Compile Include="Handlers\DynamicFormHandler.cs" />
+    <Compile Include="Migrations.cs" />
+    <Compile Include="Models\DynamicForm.cs" />
+    <Compile Include="Models\DynamicFormFields.cs" />
+    <Compile Include="Models\DynamicFormResponseRecord.cs" />
+    <Compile Include="ResourceManifest.cs" />
+    <Compile Include="Services\DynamicFieldsManager.cs" />
+    <Compile Include="Services\DynamicFormFieldsManager.cs" />
+    <Compile Include="Services\DynamicFormManager.cs" />
+    <Compile Include="Services\DynamicFormResponseRecordService.cs" />
+    <Compile Include="Services\DynamicFormResultService.cs" />
+    <Compile Include="Services\IDynamicExportToCSVService.cs" />
+    <Compile Include="Services\IDynamicField.cs" />
+    <Compile Include="Services\IDynamicFieldsManager.cs" />
+    <Compile Include="Services\IDynamicFormFieldsManager.cs" />
+    <Compile Include="Services\IDynamicFormManager.cs" />
+    <Compile Include="Services\IDynamicFormResponseRecordService.cs" />
+    <Compile Include="Services\IDynamicFormResultService.cs" />
+    <Compile Include="ViewModels\AdminEditViewModel.cs" />
+    <Compile Include="ViewModels\AdminIndexViewModel.cs" />
+    <Compile Include="ViewModels\DynamicFormDefinitionViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\DynamicField.cshtml" />
+    <Content Include="Views\FieldsToolbox.cshtml" />
+    <Content Include="Views\Parts.DynamicForm.cshtml" />
+    <Content Include="Views\Thankyou.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Admin\EditField.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\DynamicForm.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target> -->
+  <Target Name="AfterBuild" DependsOnTargets="AfterBuildCompiler">
+    <PropertyGroup>
+      <AreasManifestDir>$(ProjectDir)\..\Manifests</AreasManifestDir>
+    </PropertyGroup>
+    <!-- If this is an area child project, uncomment the following line:
+    <CreateAreaManifest AreaName="$(AssemblyName)" AreaType="Child" AreaPath="$(ProjectDir)" ManifestPath="$(AreasManifestDir)" ContentFiles="@(Content)" />
+    -->
+    <!-- If this is an area parent project, uncomment the following lines:
+    <CreateAreaManifest AreaName="$(AssemblyName)" AreaType="Parent" AreaPath="$(ProjectDir)" ManifestPath="$(AreasManifestDir)" ContentFiles="@(Content)" />
+    <CopyAreaManifests ManifestPath="$(AreasManifestDir)" CrossCopy="false" RenameViews="true" />
+    -->
+  </Target>
+  <Target Name="AfterBuildCompiler" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(ProjectDir)\..\$(ProjectName)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>45979</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://orchard.codeplex.com</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

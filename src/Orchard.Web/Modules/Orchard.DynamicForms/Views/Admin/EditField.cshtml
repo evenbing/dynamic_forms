@@ -1,0 +1,77 @@
+﻿@using System.Web.Mvc.Html;
+
+@{
+    SetMeta("IE=edge,chrome=1", httpEquiv: "X-UA-Compatible");
+    Style.Include("~/themes/theadmin/styles/site.css");
+    Style.Include("~/themes/theadmin/styles/ie.css").UseCondition("lte IE 8").SetAttribute("media", "screen, projection");
+    Style.Include("~/themes/theadmin/styles/ie6.css").UseCondition("lte IE 6").SetAttribute("media", "screen, projection");
+
+    Layout.Title = @T("Edit Field");
+    Style.Require("jQueryUI_Orchard");
+    Script.Require("jQuery").AtHead();
+    Script.Include("Orchard-DynamicForms-Serialize.js");
+
+    Script.Require("jQueryUI");
+}
+
+@Html.ValidationSummary()
+
+@using (Html.BeginFormAntiForgeryPost())
+{
+
+@* Render the dynamic form *@    
+    if (Model.Form != null)
+    {
+    <fieldset>
+        @DisplayChildren(Model.Form)
+    </fieldset>
+    }
+    
+   
+    @Display.TokenHint()
+
+    <fieldset>
+        <button class="primaryAction" id="EditFieldSubmit" type="submit" name="_submit.Save" value="@T("Save")">@T("Save")</button>
+        <button class="cancel" type="submit" name="_submit.Cancel" value="@T("Cancel")">@T("Cancel")</button>
+
+    </fieldset>
+    
+    string ClientID = @Model.clientid;
+    int formID = @Model.formid;
+    string FieldName = @Model.fieldname;
+    
+ 
+    
+    @Html.Hidden("ClientID", ClientID);
+                                    
+    @Html.Hidden("FieldName", FieldName);
+
+}
+
+@using (Script.Head())
+{
+    <script type="text/javascript">
+        //<![CDATA[
+        var requestAntiForgeryToken = '@Html.AntiForgeryTokenValueOrchard()';
+        var clientid = '@Model.clientid';
+        var formid = '@Model.formid';
+
+        //]]>
+    </script>
+}
+
+
+
+
+@using (Script.Foot())
+{
+    <script type="text/javascript">
+     
+            loadFieldForm("@Model.formid", "@Model.clientid");
+      
+    </script>
+}
+
+
+
+

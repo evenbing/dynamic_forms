@@ -1,0 +1,139 @@
+﻿@model Orchard.DynamicForms.ViewModels.AdminEditViewModel
+@using Orchard.Forms.Services;
+@using Orchard.DynamicForms.ViewModels;
+@using Orchard.ContentManagement;
+@using Orchard.Core.Contents;
+@{
+    //Layout.Title = @T("Edit Dynamic Form {0}", Model.DynamicFormDefinition);
+    Style.Require("DynamicFormsAdmin");
+    Style.Require("jQueryUI_Orchard");
+    Style.Include("dragDropStyle.css");
+    Script.Include("Orchard-DynamicForms-Serialize.js").AtFoot();
+    Script.Include("Orchard-DynamicForms.js").AtFoot();
+    Script.Require("jQuery").AtHead();
+    //Script.Include("jquery.mobile-1.4.0.js");
+    Script.Require("jQueryUI");
+  
+}
+
+@*1 *@
+@using (Html.BeginFormAntiForgeryPost())
+{
+    @Html.ValidationSummary()
+
+    //if (Model.FormId != 0)
+    //{ 
+    <div id="dynamicform-container" >
+<label id="activeForm">This form is Active,thus edit is disabled.</label>
+<br/>
+        <div id="editor-wrapper">
+            <div id="dynamicfield-editor">
+                <div>
+                    <input type="button" value="Add a new drop zone" onclick="AddNewDropZone();" />
+                </div>
+                <div id="dynamicfield-toolbar">
+                    <div id="dynamicfield-toolbar-delete">
+                        <label title="@T("Remove")"></label>
+                    </div>
+                </div>
+                <br />
+            </div>
+
+        </div>
+        <div id="dynamicfield-toolbox" @if (Model.AllDynamicFields == null)
+                                       {
+            <text>style="visibility:hidden"</text>}>
+            @Display.FieldsToolbox(Model)
+        </div>
+
+    </div>
+<p>
+    @Html.Hidden("formID", Model.FormId)
+     <input type="hidden" id="data" name="data" value ="" />                                 
+   
+    @Html.Hidden("returnUrl", Request.Url.ToString())
+
+</p>     
+    
+   using (Script.Head())
+    {
+    <script type="text/javascript">
+        //<![CDATA[
+        var renderFieldUrl = '@HttpUtility.JavaScriptStringEncode(Url.Action("RenderField", "Admin", new { area = "Orchard.DynamicForms" }))';
+        var editFieldUrl = '@HttpUtility.JavaScriptStringEncode(Url.Action("EditField", "Admin", new { area = "Orchard.DynamicForms" }))';
+        var requestAntiForgeryToken = '@HttpUtility.JavaScriptStringEncode(Html.AntiForgeryTokenValueOrchard().ToString())';
+        var editFlag=true;
+        @*var localId = '@HttpUtility.JavaScriptStringEncode(Model.LocalId)';*@
+        var fieldClientID = 1;
+        var formID =  '@Model.FormId';
+        var updatedDynamicFieldClientId = null;
+        var updatedDynamicFieldState = null;
+        var awaitingRecords = [];
+        var returnUrl = '@Request.Url.ToString()';
+        var zoneCount = 1;
+    @if (TempData.ContainsKey("UpdatedViewModel"))
+        {
+            var model = TempData["UpdatedViewModel"] as UpdatedFieldModel;
+            if (model != null)
+            {
+                @: updatedDynamicFieldClientId = '@(model.dynamicFieldClientId)';
+                @: updatedDynamicFieldState = '@Html.Raw(HttpUtility.JavaScriptStringEncode(FormParametersHelper.ToJsonString(model.Data)))';                                                                  
+            }
+        }
+        else
+        {   //Called when the form is loaded with fields from database
+        @: var state = @Html.Raw(Model.DynamicFormDefinition.JsonData);
+        @: sessionStorage.setItem(formID, JSON.stringify(state));
+        }
+
+    </script>
+<script>
+    $(document).ready(function(){
+        var editFormUrl = '@HttpUtility.JavaScriptStringEncode(Url.Action("IsFormEditable", "Admin", new { area = "Orchard.DynamicForms" }))';
+        $("#activeForm").hide();
+        $.ajax({
+            type:"GET",
+            url:editFormUrl,
+            data:{FormId: @Model.FormId},
+            async:false,
+            success:IsEditable
+
+        });
+        function IsEditable(flag)
+        {
+            editFlag=flag;
+
+                if(flag)
+                {
+                    $("#activeForm").show();
+                    $("#dynamicform-container *").children().attr("disabled","disabled");
+                    $("#dynamicform-container").attr("title","This form is Active,thus edit is disabled.");
+                    
+
+                }
+            }
+    });
+</script>
+    using (Script.Foot())
+    {
+    <script type="text/javascript">
+        //<![CDATA[
+        $("form").submit(function () {
+            console.log("Save local start");
+            saveLocal(formID);
+           
+            var form = loadForm(formID);
+            var data = JSON.stringify(form);
+            
+            $("#data").val(data);
+            
+            var obj =  $("#data").val(); 
+        });
+        //]]>
+    </script>
+                                       }
+
+    //}
+
+}
+}

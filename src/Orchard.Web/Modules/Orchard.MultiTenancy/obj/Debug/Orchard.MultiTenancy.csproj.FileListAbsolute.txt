@@ -1,0 +1,6 @@
+D:\Zip\Orchard.Source.1.8\src\Orchard.Web\Modules\Orchard.MultiTenancy\bin\Orchard.MultiTenancy.dll
+D:\Zip\Orchard.Source.1.8\src\Orchard.Web\Modules\Orchard.MultiTenancy\bin\Orchard.MultiTenancy.pdb
+D:\Zip\Orchard.Source.1.8\src\Orchard.Web\Modules\Orchard.MultiTenancy\bin\System.Web.Mvc.dll
+D:\Zip\Orchard.Source.1.8\src\Orchard.Web\Modules\Orchard.MultiTenancy\bin\System.Web.Mvc.xml
+D:\Zip\Orchard.Source.1.8\src\Orchard.Web\Modules\Orchard.MultiTenancy\obj\Debug\Orchard.MultiTenancy.dll
+D:\Zip\Orchard.Source.1.8\src\Orchard.Web\Modules\Orchard.MultiTenancy\obj\Debug\Orchard.MultiTenancy.pdb

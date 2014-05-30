@@ -1,0 +1,6 @@
+D:\Zip\Orchard.Source.1.8\src\Tools\Orchard\bin\Debug\Orchard.exe.config
+D:\Zip\Orchard.Source.1.8\src\Tools\Orchard\bin\Debug\Orchard.exe
+D:\Zip\Orchard.Source.1.8\src\Tools\Orchard\bin\Debug\Orchard.pdb
+D:\Zip\Orchard.Source.1.8\src\Tools\Orchard\obj\Debug\Orchard.csprojResolveAssemblyReference.cache
+D:\Zip\Orchard.Source.1.8\src\Tools\Orchard\obj\Debug\Orchard.exe
+D:\Zip\Orchard.Source.1.8\src\Tools\Orchard\obj\Debug\Orchard.pdb

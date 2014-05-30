@@ -1,0 +1,43 @@
+﻿@using Orchard.Utility.Extensions
+@using Orchard.DynamicForms.Models
+@using Orchard.DynamicForms.Services
+
+@{
+    
+ 
+}
+
+@{
+    IList<IDynamicField> allDynamicFields = Model.AllDynamicFields;
+}
+<!-- List of available activities -->
+<ul>
+    @foreach (var dField in allDynamicFields)
+    {
+        <li class="dynamicfield-toolbox-item toolbox-event dragzones ui-draggable toolbox-@dField.Name.HtmlClassify()" data-field-name="@dField.Name" title="@dField.Description">
+            <div>
+                <h2>@dField.Name.CamelFriendly()</h2>
+                <span class="hint">@dField.Description</span>
+            </div>
+        </li>
+    }
+</ul>
+
+
+@* Render script to initialize a new jsplumb shape in the form of activities['activity-name'].create() *@
+@using (Script.Foot())
+{
+    <script type="text/javascript">
+        //<![CDATA[
+        var dynamicFields = { @foreach (var dField in allDynamicFields)
+                           { <text>
+            '@dField.Name': {
+                description: '@HttpUtility.JavaScriptStringEncode(dField.Description.Text)',                
+                hasForm: @(!String.IsNullOrWhiteSpace(dField.Form) ? "true" : "false")
+                },</text> 
+                           }
+
+        };
+        //]]>
+    </script>
+}

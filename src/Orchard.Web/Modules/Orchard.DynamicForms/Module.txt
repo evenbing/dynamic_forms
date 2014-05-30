@@ -1,0 +1,10 @@
+﻿Name: Orchard.DynamicForms
+AntiForgery: enabled
+Author: The Cybage Team
+Website: http://www.cybage.com
+Version: 1.0
+OrchardVersion: 1.8
+Description: Facilitates user to create dynamic forms.
+Features:
+    Orchard.DynamicForms:
+        Description: Dynamic Forms module for Orchard websites.

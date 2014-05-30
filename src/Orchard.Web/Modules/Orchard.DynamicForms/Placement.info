@@ -1,0 +1,9 @@
+﻿<Placement>
+  <Place Parts_DynamicForm="Content:after"/>
+  <Place Parts_DynamicForm_Edit="Content:after"/>
+  <!--<Place DynamicForm="Content:7.5"/>-->
+
+  <Match DisplayType="SummaryAdmin">
+    <Place Parts_DynamicForm="-"/>
+  </Match>
+</Placement>
